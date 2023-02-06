@@ -46,9 +46,9 @@
     "typescript": "*"
   },
   "bugs": {
-    "url": "https://github.com/GeekyAnts/nativebase-templates/issues"
+    "url": "https://github.com/saleszera/lorena-gc/issues"
   },
-  "homepage": "https://github.com/GeekyAnts/nativebase-templates#readme",
+  "homepage": "https://github.com/saleszera/lorena-gc",
   "author": "saleszera",
   "private": false
 }
