@@ -1,13 +1,14 @@
-import { NativeBaseProvider } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native';
-import {Home} from './screens'
+import { NativeBaseProvider } from 'native-base';
+
+import Routes from './routers/Stack';
 
 const App = () => (
   <NavigationContainer>
     <NativeBaseProvider>
-      <Home/>
+      <Routes />
     </NativeBaseProvider>
   </NavigationContainer>
-)
+);
 
-export default App
+export default App;

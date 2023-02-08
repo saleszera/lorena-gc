@@ -1,11 +1,11 @@
 const daysOfTheWeek = [
-  "Domingo",
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado"
-]
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado',
+];
 
-export default daysOfTheWeek
+export default daysOfTheWeek;

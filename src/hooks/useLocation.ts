@@ -1,74 +1,85 @@
-import * as Location from 'expo-location';
 import { useCallback, useEffect, useState } from 'react';
 
+import * as Location from 'expo-location';
+
 interface IGetAdrress {
-  latitude: number
-  longitude: number
+  latitude: number;
+  longitude: number;
 }
 
-interface IGetGeoLocation{
-  address: string
+interface IGetGeoLocation {
+  address: string;
 }
 
 const useLocation = () => {
-  const [permission, setPermission] = useState<Location.PermissionStatus>()
+  const [permission, setPermission] = useState<Location.PermissionStatus>();
 
   useEffect(() => {
-    (async () => {
-      const {status} = await Location.requestForegroundPermissionsAsync()
+    const getPermission = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
 
-      setPermission(status)
-    })()
-  }, [])
+      setPermission(status);
+    };
+
+    void getPermission();
+  }, []);
 
   const getCurrentLocation = useCallback(async () => {
     try {
-      if(permission !== 'granted'){
-        throw new Error('Permission to access location was denied')
+      if (permission !== 'granted') {
+        throw new Error('Permission to access location was denied');
       }
 
       const location = await Location.getCurrentPositionAsync();
 
-      return location
+      return location;
     } catch (error) {
-      return error      
+      return error;
     }
-    
-  }, [Location, permission])
+  }, [Location, permission]);
 
-  const getGeoLocation = useCallback(async ({address}:IGetGeoLocation) => {
-    try {
-      if(permission !== 'granted'){
-        throw new Error('Permission to access location was denied')
+  const getGeoLocation = useCallback(
+    async ({ address }: IGetGeoLocation) => {
+      try {
+        if (permission !== 'granted') {
+          throw new Error('Permission to access location was denied');
+        }
+
+        const [location] = await Location.geocodeAsync(address);
+
+        return location;
+      } catch (error) {
+        return error;
       }
+    },
+    [Location, permission],
+  );
 
-      const [location] = await Location.geocodeAsync(address)
+  const getAdrress = useCallback(
+    async ({ latitude, longitude }: IGetAdrress) => {
+      try {
+        if (permission !== 'granted') {
+          throw new Error('Permission to access location was denied');
+        }
 
-      return location
-    } catch (error) {
-      return error
-    }    
-  }, [Location, permission])
+        const [address] = await Location.reverseGeocodeAsync({
+          latitude,
+          longitude,
+        });
 
-  const getAdrress = useCallback(async ({latitude, longitude}: IGetAdrress) => {
-    try {
-      if(permission !== 'granted'){
-        throw new Error('Permission to access location was denied')
+        return address;
+      } catch (error) {
+        return error;
       }
-
-      const [address] = await Location.reverseGeocodeAsync({latitude: latitude as number, longitude: longitude as number})
-
-      return address
-    } catch (error) {
-      return error
-    }    
-  }, [Location, permission])
+    },
+    [Location, permission],
+  );
 
   return {
     getCurrentLocation,
     getGeoLocation,
-    getAdrress
-  }
-}
+    getAdrress,
+  };
+};
 
-export default useLocation
+export default useLocation;
