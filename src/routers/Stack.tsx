@@ -35,10 +35,7 @@ const StackRoutes = () => {
       <Stack.Screen
         name="dashboard"
         options={{
-          headerShown: true,
-          headerTitle: '',
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: light[100] },
+          headerShown: false,
         }}
         getComponent={() => require('../screens').Dashboard}
       />
